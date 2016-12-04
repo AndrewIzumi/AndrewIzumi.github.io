@@ -60,6 +60,16 @@ public class Model {
          }
       }
    }
+   
+   public void unregisterCourse(String courseId) {
+      if (currentStudent != null) {
+         Course course = findOpenCourse(courseId);
+         if (course != null) {
+            currentStudent.removeCourse(course);
+            course.decrementEnrolledNum();
+         }
+      }
+   }
 
    public List<Course> getOpenCourses() {
       return openCourses;

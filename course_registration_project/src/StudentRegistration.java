@@ -5,21 +5,20 @@ import view.RegisterCourseView;
 import view.UnregisterCourseView;
 import view.StudentProfileView;
 import view.CourseView;
-import controller.StudentCourseController;
-import controller.StudentCourseController.ViewType;
+import controller.Controller;
+import controller.Controller.ViewType;
 
 public class StudentRegistration {
    private Model model;
 
-   private StudentCourseController controller;
+   private Controller controller;
 
    public StudentRegistration() {
-
    }
 
    public void initialize() {
       model = new Model();
-      controller = new StudentCourseController();
+      controller = new Controller();
       LoginView loginView = new LoginView(model, controller);
       MainView mainView = new MainView(model, controller);
       RegisterCourseView registerCourseView = new RegisterCourseView(model, controller);

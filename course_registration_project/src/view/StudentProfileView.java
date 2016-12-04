@@ -5,7 +5,7 @@ import java.util.List;
 import model.Model;
 import model.Course;
 import controller.Controller;
-import controller.StudentCourseController.ViewType;
+import controller.Controller.ViewType;
 
 public class StudentProfileView extends View {
    public StudentProfileView(Model model, Controller controller) {
@@ -18,7 +18,11 @@ public class StudentProfileView extends View {
       System.out.println("Name: " + model.getUserFullName());
       System.out.println();
       System.out.println("Registered Courses");
-      for (Course course : model.getRegisteredCourses()) {
+      List<Course> registeredCourses = model.getRegisteredCourses();
+      if (registeredCourses.isEmpty()) {
+         System.out.println("No courses registered.");
+      }
+      for (Course course : registeredCourses) {
          System.out.println("------------------------------------------");
          System.out.println(course);
       }

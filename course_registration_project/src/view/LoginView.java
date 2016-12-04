@@ -2,7 +2,7 @@ package view;
 
 import model.Model;
 import controller.Controller;
-import controller.StudentCourseController.ViewType;
+import controller.Controller.ViewType;
 
 public class LoginView extends View {
    public LoginView(Model model, Controller controller) {

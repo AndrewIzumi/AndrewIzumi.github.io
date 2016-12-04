@@ -6,7 +6,7 @@ import model.Model;
 import java.util.List;
 
 import controller.Controller;
-import controller.StudentCourseController.ViewType;
+import controller.Controller.ViewType;
 
 public class UnregisterCourseView extends View {
    public UnregisterCourseView(Model model, Controller controller) {
@@ -28,7 +28,7 @@ public class UnregisterCourseView extends View {
 
          boolean loop = true;
          while (loop) {
-            System.out.println("\n1) Unregister course.");
+            System.out.println("\n1) Unregister course");
             System.out.println("2) Go to main view");
             System.out.print("Enter selection:  ");
 
@@ -37,7 +37,13 @@ public class UnregisterCourseView extends View {
             case "1": {
                System.out.print("\nEnter Course Id:  ");
                String courseId = controller.systemInput().nextLine();
-               loop = false;
+               if (!model.registeredCourseExists(courseId)) {
+                  System.out.println("Course " + courseId + " does not exist in schedule.");
+               } else {
+                  model.unregisterCourse(courseId);
+                  loop = false;
+                  System.out.println("Course " + courseId + " has been removed from schedule.");
+               }
                break;
             }
             case "2": {

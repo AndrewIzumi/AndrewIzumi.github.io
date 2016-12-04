@@ -43,9 +43,15 @@ public class Student {
       return false;
    }
 
-   public void addCourse(Course newCourse) {
-      if (!courseExists(newCourse.getId())) {
-         registeredCourses.add(newCourse);
+   public void addCourse(Course course) {
+      if (!courseExists(course.getId())) {
+         registeredCourses.add(course);
+      }
+   }
+   
+   public void removeCourse(Course course) {
+      if (courseExists(course.getId())) {
+         registeredCourses.remove(course);
       }
    }
 

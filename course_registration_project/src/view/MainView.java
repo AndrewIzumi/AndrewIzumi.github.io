@@ -2,7 +2,7 @@ package view;
 
 import model.Model;
 import controller.Controller;
-import controller.StudentCourseController.ViewType;
+import controller.Controller.ViewType;
 
 public class MainView extends View {
    public MainView(Model model, Controller controller) {
