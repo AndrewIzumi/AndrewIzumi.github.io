@@ -10,6 +10,10 @@ public class MainView extends View {
       this.controller = controller;
    }
 
+   /**
+    * Displays messages and prompts for main menu selections
+    */
+   @Override
    public void display() {
       boolean loop;
       do {

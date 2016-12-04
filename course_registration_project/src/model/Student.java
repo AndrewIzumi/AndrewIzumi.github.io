@@ -48,7 +48,7 @@ public class Student {
          registeredCourses.add(course);
       }
    }
-   
+
    public void removeCourse(Course course) {
       if (courseExists(course.getId())) {
          registeredCourses.remove(course);

@@ -14,6 +14,13 @@ public class DataInput {
       this.filePath = filePath;
    }
 
+   /**
+    * Parse a single line of data to initialize a Course object
+    *
+    * @param  line single line of data for a given course from file
+    * @return      Course object initialized from a single line of
+    *              course data from file
+    */
    private Course parseLine(String line) {
       String[] args = line.split("\\|");
       if (args.length != 7) {
@@ -33,6 +40,14 @@ public class DataInput {
       }
    }
 
+   /**
+    * Parse course data from file into course list
+    *
+    * @param  courseList  course list to be appended with course objects
+    *                     initialized with course data from file
+    * @return             true if course data read from file successfully
+    *                     false otherwise
+    */
    public boolean parseCourseData(List<Course> courseList) {
       Scanner input = null;
       try {
@@ -41,6 +56,9 @@ public class DataInput {
          input.useDelimiter("\\|");
          while (input.hasNext()) {
             String line = input.nextLine();
+            if (line.isEmpty() || line.charAt(0) == '#') {
+               continue;
+            }
             Course course = parseLine(line);
             if (course == null) {
                return false;

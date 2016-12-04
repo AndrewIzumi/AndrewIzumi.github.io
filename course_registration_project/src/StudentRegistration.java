@@ -16,6 +16,12 @@ public class StudentRegistration {
    public StudentRegistration() {
    }
 
+   /**
+    * Initializes model, view and controller objects to allow
+    * displaying and switching of views.  Note that the order
+    * of adding the views to the controller must match the
+    * order of the Controller.ViewType enum.
+    */
    public void initialize() {
       model = new Model();
       controller = new Controller();
@@ -38,6 +44,9 @@ public class StudentRegistration {
       processEvents();
    }
 
+   /**
+    * Begin displaying the views starting with the login view
+    */
    public void processEvents() {
       while (true) {
          controller.currentView().display();

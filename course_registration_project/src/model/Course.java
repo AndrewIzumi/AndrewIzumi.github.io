@@ -109,6 +109,12 @@ public class Course {
             "  enrolled: " + enrolledNum;
    }
 
+   /**
+    * Used for object removal from course list based on course id 
+    *
+    * @param  obj  object to be compared
+    * @return      true if course id is the same; false otherwise
+    */
    public boolean equals(Object obj) {
       if (this == obj)
          return true;

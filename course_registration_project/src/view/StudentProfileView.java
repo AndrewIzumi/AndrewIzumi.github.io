@@ -13,6 +13,11 @@ public class StudentProfileView extends View {
       this.controller = controller;
    }
 
+   /**
+    * Displays student profile and registered courses
+    * Allows user the option to go to main view or login view
+    */
+   @Override
    public void display() {
       System.out.println("\nLogged in as " + model.getUserName());
       System.out.println("Name: " + model.getUserFullName());
@@ -29,19 +34,19 @@ public class StudentProfileView extends View {
       System.out.println("\n1) Go to main view");
       System.out.println("2) Log out");
       System.out.print("Enter selection:  ");
-      
+
       String selection = controller.systemInput().nextLine();
       switch (selection) {
       case "1":
-    	  controller.setView(ViewType.MAIN_VIEW);
-    	  break;
+         controller.setView(ViewType.MAIN_VIEW);
+         break;
       case "2":
-    	  model.clearCurrentStudent();
-          controller.setView(ViewType.LOGIN_VIEW);
-          System.out.println("Logged out of system.");
-          break;
+         model.clearCurrentStudent();
+         controller.setView(ViewType.LOGIN_VIEW);
+         System.out.println("Logged out of system.");
+         break;
       default:
-    	  System.out.println("Invalid selection, try again.");
+         System.out.println("Invalid selection, try again.");
       }
    }
 }

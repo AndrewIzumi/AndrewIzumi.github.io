@@ -10,6 +10,10 @@ public class LoginView extends View {
       this.controller = controller;
    }
 
+   /**
+    * Displays prompts for adding new student, login and exit
+    */
+   @Override
    public void display() {
       boolean loop = true;
       while (loop) {
@@ -32,10 +36,13 @@ public class LoginView extends View {
             System.out.print("Enter password:  ");
             String password = controller.systemInput().nextLine();
 
+            // Check to see if user is registered
             if (model.verifyAccount(userName, password)) {
                System.out.println("User '" + userName + "' already exists, try again.");
             } else {
+               // Add new student in memory and also to file
                model.addStudent(firstName, lastName, userName, password);
+               // Set next view to be displayed to main menu view
                controller.setView(ViewType.MAIN_VIEW);
                loop = false;
             }
@@ -48,10 +55,12 @@ public class LoginView extends View {
             System.out.print("Enter password:  ");
             String password = controller.systemInput().nextLine();
 
+            // Check to see if user is registered
             if (!model.verifyAccount(userName, password)) {
                System.out.println("Invalid user name or password, try again.");
             } else {
                System.out.println("User " + userName + " is authenticated.");
+               // Set next view to be displayed to main menu view
                controller.setView(ViewType.MAIN_VIEW);
                loop = false;
             }

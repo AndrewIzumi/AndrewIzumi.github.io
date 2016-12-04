@@ -13,6 +13,11 @@ public class RegisterCourseView extends View {
       this.controller = controller;
    }
 
+   /**
+    * Displays messages and prompts for registering course
+    * Allows user the option to go to main view
+    */
+   @Override
    public void display() {
       while (true) {
          System.out.println("\nRegistered Courses for " + model.getUserName());

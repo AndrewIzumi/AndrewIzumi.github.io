@@ -11,6 +11,10 @@ public class CourseView extends View {
       this.controller = controller;
    }
 
+   /**
+    * Displays prompts for displaying all open courses
+    */
+   @Override
    public void display() {
       System.out.println("\nOpen Registration Courses");
       for (Course course : model.getOpenCourses()) {
@@ -28,9 +32,11 @@ public class CourseView extends View {
          String selection = controller.systemInput().nextLine();
          switch (selection) {
          case "1":
+            // Set next view to be displayed to student profile view
             controller.setView(ViewType.PROFILE_VIEW);
             break;
          case "2":
+            // Set next view to be displayed to main menu view
             controller.setView(ViewType.MAIN_VIEW);
             break;
          default:

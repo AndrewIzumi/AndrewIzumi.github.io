@@ -9,6 +9,5 @@ public abstract class View {
    protected Controller controller;
 
    public void display() {
-
    }
 }
