@@ -29,7 +29,7 @@ public class UnregisterCourseView extends View {
          boolean loop = true;
          while (loop) {
             System.out.println("\n1) Unregister course.");
-            System.out.println("2) Return to main view");
+            System.out.println("2) Go to main view");
             System.out.print("Enter selection:  ");
 
             String selection = controller.systemInput().nextLine();
