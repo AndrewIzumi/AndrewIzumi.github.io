@@ -124,7 +124,7 @@ public class Course {
          return false;
       Course other = (Course) obj;
       if (this.id.equals(other.id))
-         return false;
-      return true;
+         return true;
+      return false;
    }
 }
