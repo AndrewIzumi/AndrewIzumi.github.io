@@ -3,6 +3,7 @@ package model;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
+import java.io.PrintWriter;
 
 import dataio.DataInput;
 
@@ -94,7 +95,29 @@ public class Model {
             course.incrementEnrolledNum();
          }
       }
-      // TODO:  Write result to file for persistence
+      // Write temporary file with changes
+      String tmpFileName = "data" + File.separator + "coursesTMP.txt";
+      try {
+         File newFile = new File(tmpFileName);
+         PrintWriter printwriter = new PrintWriter(newFile);
+         printwriter.println("# id | name | startDate | endDate | summary | limit | enrolled");
+         for(Course c : openCourses) {
+            printwriter.println(c.getId() + '|' + c.getName() + '|' + c.getStartDate() + '|' + c.getEndDate() + '|' + c.getSummary() +
+                                c.getEnrollLimit() + '|' + c.getEnrolledNum());
+         }
+         printwriter.close();
+      }
+      catch (IOException ex) {
+         //
+      }
+      
+      // delete old file
+      File oldFile = new File(courseFilePath);
+      oldFile.delete();
+      
+      // rename tmp file to old file name
+      newFile.renameTo(oldFile);
+      
    }
 
    /**
