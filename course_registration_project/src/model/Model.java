@@ -95,29 +95,8 @@ public class Model {
             course.incrementEnrolledNum();
          }
       }
-      // Write temporary file with changes
-      String tmpFileName = "data" + File.separator + "coursesTMP.txt";
-      File newFile = new File(tmpFileName);
-      try {
-         PrintWriter printwriter = new PrintWriter(newFile);
-         printwriter.println("# id | name | startDate | endDate | summary | limit | enrolled");
-         for(Course c : openCourses) {
-            printwriter.println(c.getId() + '|' + c.getName() + '|' + c.getStartDate() + '|' + c.getEndDate() + '|' + c.getSummary() +
-                                c.getEnrollLimit() + '|' + c.getEnrolledNum());
-         }
-         printwriter.close();
-      }
-      catch (IOException ex) {
-         //
-      }
-      
-      // delete old file
-      File oldFile = new File(courseFilePath);
-      oldFile.delete();
-      
-      // rename tmp file to old file name
-      newFile.renameTo(oldFile);
-      
+      saveCourseChanges();
+      // TODO: saveStudentChanges();
    }
 
    /**
@@ -134,7 +113,8 @@ public class Model {
             course.decrementEnrolledNum();
          }
       }
-      // TODO:  Write result to file for persistence
+      saveCourseChanges();
+      // TODO:  saveStudentChanges();
    }
 
    /**
@@ -196,6 +176,40 @@ public class Model {
    
    protected boolean loadStudents(String filePath) {
       // TODO:  Load students and registered courses from file
+      return true;
+   }
+   
+   /**
+    * Saves the current openCourses list to the courses.txt file.
+    * Returns true if successful, false if not
+    */
+   public boolean saveCourseChanges() {
+      // Write temporary file with changes
+      String tmpFileName = "data" + File.separator + "coursesTMP.txt";
+      File newFile = new File(tmpFileName);
+      PrintWriter printwriter = null;
+      try {
+         printwriter = new PrintWriter(newFile);
+         printwriter.println("# id | name | startDate | endDate | summary | limit | enrolled");
+         for(Course c : openCourses) {
+            printwriter.println(c.getId() + '|' + c.getName() + '|' + c.getStartDate() + '|' + c.getEndDate() + '|' + c.getSummary() +
+                                c.getEnrollLimit() + '|' + c.getEnrolledNum());
+         }
+      }
+      catch (IOException ex) {
+         return false;
+      }
+      finally {
+         printwriter.close();
+      }
+      
+      // delete old file
+      File oldFile = new File(courseFilePath);
+      oldFile.delete();
+      
+      // rename tmp file to old file name
+      newFile.renameTo(oldFile);
+      
       return true;
    }
 }
