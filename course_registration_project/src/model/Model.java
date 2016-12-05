@@ -89,7 +89,7 @@ public class Model {
    public void registerCourse(String courseId) {
       if (currentStudent != null) {
          Course course = findOpenCourse(courseId);
-         if (course != null) {
+         if (course != null && course.isCourseAvailable() && !currentStudent.courseExists(courseId)) {
             currentStudent.addCourse(course);
             course.incrementEnrolledNum();
          }
