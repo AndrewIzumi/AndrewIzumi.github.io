@@ -72,4 +72,57 @@ public class DataInput {
       }
       return true;
    }
+   
+   /**
+    * Parse a single line of data to initialize a Student object
+    *
+    * @param  line single line of data for a given student from students.txt file
+    * @return      Course object initialized from a single line of
+    *              student data from file
+    */
+   private Student parseStudentLine(String line) {
+      String[] args = line.split("\\|");
+      if (args.length != 4) {
+         return null;
+      }
+      String username = args[0];
+      String firstName = args[1];
+      String lastName = args[2];
+      String password = args[3];
+      return new Student(firstName, lastName, username, password);
+   }
+   
+  /**
+    * Parse student data from file into student list
+    *
+    * @param  studentList student list to be appended with Student objects
+    *                     initialized with student data from file
+    * @return             true if student data read from file successfully
+    *                     false otherwise
+    */
+   public boolean parseStudentData(List<Course> studentList) {
+      Scanner input = null;
+      try {
+         File file = new File(filePath);
+         input = new Scanner(file);
+         input.useDelimiter("\\|");
+         while (input.hasNext()) {
+            String line = input.nextLine();
+            // TODO: make sure students can't have 'username' as their username
+            if (line.isEmpty() || line.startsWith("username")) {
+               continue;
+            }
+            Student student = parseStudentLine(line);
+            if (course == null) {
+               return false;
+            }
+            studentList.add(student);
+         }
+      } catch (FileNotFoundException ex) {
+         return false;
+      } finally {
+         input.close();
+      }
+      return true;
+   }
 }
