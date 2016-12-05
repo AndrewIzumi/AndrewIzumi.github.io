@@ -16,8 +16,9 @@ public class Model {
 
    private static final String courseFilePath = "data" + File.separator + "courses.txt";
    
-   // perhaps should be changed so each student has their own txt file?
    private static final String studentFilePath = "data" + File.separator + "students.txt";
+   
+   private String currentStudentFilePath = ""; // note: file may not exist for some/new students
 
    public Model() {
       if (!loadCourses(courseFilePath)) {
@@ -42,6 +43,7 @@ public class Model {
       Student newStudent = new Student(firstName, lastName, userName, password);
       students.add(newStudent);
       currentStudent = newStudent;
+      currentStudentFilePath = "data" + File.separator + "student_" + currentStudent.getUserName() + ".txt";
       // TODO:  Write result to file for persistence
    }
 
@@ -62,6 +64,20 @@ public class Model {
          if (student.getUserName().equals(userName)) {
             if (student.getPassword().equals(password)) {
                currentStudent = student;
+               
+               // need to load student courses after login
+               List<Course> studentCourses = new ArrayList<>();
+               currentStudentFilePath = "data" + File.separator + "student_" + currentStudent.getUserName() + ".txt";
+               DataInput dataInput = new DataInput(currentStudentFilePath);
+               
+               if(dataInput.parseCourseData(studentCourses)) {
+                  for(Course course : studentCourses) {
+                     Course updatedCourse = findOpenCourse(course.getId());
+                     if(updatedCourse != null) {
+                        currentStudent.addCourse(updatedCourse);
+                     }
+                  }
+               }
                return true;
             }
          }
@@ -79,6 +95,7 @@ public class Model {
 
    public void clearCurrentStudent() {
       currentStudent = null;
+      currentStudentFilePath = "";
    }
 
    /**
@@ -175,8 +192,8 @@ public class Model {
    }
    
    protected boolean loadStudents(String filePath) {
-      // TODO:  Load students and registered courses from file
-      return true;
+      DataInput dataInput = new DataInput(filePath);
+      return dataInput.parseStudentData(students);
    }
    
    /**
