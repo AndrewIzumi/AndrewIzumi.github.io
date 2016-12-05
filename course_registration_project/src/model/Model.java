@@ -97,8 +97,8 @@ public class Model {
       }
       // Write temporary file with changes
       String tmpFileName = "data" + File.separator + "coursesTMP.txt";
+      File newFile = new File(tmpFileName);
       try {
-         File newFile = new File(tmpFileName);
          PrintWriter printwriter = new PrintWriter(newFile);
          printwriter.println("# id | name | startDate | endDate | summary | limit | enrolled");
          for(Course c : openCourses) {
