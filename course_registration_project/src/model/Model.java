@@ -15,6 +15,7 @@ public class Model {
 
    private static final String courseFilePath = "data" + File.separator + "courses.txt";
    
+   // perhaps should be changed so each student has their own txt file?
    private static final String studentFilePath = "data" + File.separator + "students.txt";
 
    public Model() {
