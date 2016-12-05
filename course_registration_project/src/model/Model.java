@@ -106,7 +106,7 @@ public class Model {
    public void unregisterCourse(String courseId) {
       if (currentStudent != null) {
          Course course = findOpenCourse(courseId);
-         if (course != null) {
+         if (course != null && currentStudent.courseExists(courseId)) {
             currentStudent.removeCourse(course);
             course.decrementEnrolledNum();
          }
