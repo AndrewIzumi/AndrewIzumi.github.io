@@ -1,2 +1,1 @@
-SCI402|C++ Libraries|02/13/2017|03/19/2017|Advanced Applications of the C++ Standard Template Library|30|30
-SCI471|Advanced Studies in Lean|02/13/2017|03/19/2017|Advanced Lean Toolkit for Lean Six Sigma|20|19
+SCI402|SCI471|MGT410
