@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import model.Course;
+import model.Student;
 
 public class DataInput {
    private String filePath;
@@ -100,7 +101,7 @@ public class DataInput {
     * @return             true if student data read from file successfully
     *                     false otherwise
     */
-   public boolean parseStudentData(List<Course> studentList) {
+   public boolean parseStudentData(List<Student> studentList) {
       Scanner input = null;
       try {
          File file = new File(filePath);
@@ -113,7 +114,7 @@ public class DataInput {
                continue;
             }
             Student student = parseStudentLine(line);
-            if (course == null) {
+            if (student == null) {
                return false;
             }
             studentList.add(student);

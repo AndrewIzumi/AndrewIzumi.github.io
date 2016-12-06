@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.PrintWriter;
+import java.io.IOException;
 
 import dataio.DataInput;
 
@@ -196,7 +197,7 @@ public class Model {
          printwriter.println("# id | name | startDate | endDate | summary | limit | enrolled");
          for(Course c : openCourses) {
             printwriter.println(c.getId() + '|' + c.getName() + '|' + c.getStartDate() + '|' + c.getEndDate() + '|' + c.getSummary() +
-                                c.getEnrollLimit() + '|' + c.getEnrolledNum());
+                                '|' + c.getEnrollLimit() + '|' + c.getEnrolledNum());
          }
       }
       catch (IOException ex) {
