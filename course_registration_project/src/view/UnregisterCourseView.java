@@ -20,44 +20,47 @@ public class UnregisterCourseView extends View {
     */
    @Override
    public void display() {
-      while (true) {
-         System.out.println("\nRegistered Courses for " + model.getUserName());
+      boolean loop = true;
+      while (loop) {
+         System.out.println("\nRegistered Courses for " + model.getUserName() + '\n');
          List<Course> registeredCourses = model.getRegisteredCourses();
          if (registeredCourses.isEmpty()) {
-            System.out.println("No courses registered.");
-         }
-         for (Course course : registeredCourses) {
-            System.out.println("------------------------------------------");
-            System.out.println(course);
+            System.out.println("No courses registered.\n");
+         } else {
+            for (Course course : registeredCourses) {
+               System.out.println("------------------------------------------");
+               System.out.println(course);
+            }
+            System.out.println("------------------------------------------\n");
          }
 
-         boolean loop = true;
-         while (loop) {
-            System.out.println("\n1) Unregister course");
-            System.out.println("2) Go to main view");
-            System.out.print("Enter selection:  ");
+         System.out.println("1) Unregister course\n");
+         System.out.println("2) Go to main view\n");
+         System.out.print("Enter selection:  ");
 
-            String selection = controller.systemInput().nextLine();
-            switch (selection) {
-            case "1": {
-               System.out.print("\nEnter Course Id:  ");
-               String courseId = controller.systemInput().nextLine();
-               if (!model.registeredCourseExists(courseId)) {
-                  System.out.println("Course " + courseId + " does not exist in schedule.");
-               } else {
-                  model.unregisterCourse(courseId);
-                  loop = false;
-                  System.out.println("Course " + courseId + " has been removed from schedule.");
-               }
-               break;
+         String selection = controller.systemInput().nextLine();
+         switch (selection) {
+         case "1": {
+            System.out.print("\nEnter Course Id:  ");
+            String courseId = controller.systemInput().nextLine();
+            if (!model.registeredCourseExists(courseId)) {
+               clearScreen();
+               System.out.println("\nCourse " + courseId + " does not exist in schedule.");
+            } else {
+               model.unregisterCourse(courseId);
+               clearScreen();
+               System.out.println("\nCourse " + courseId + " has been removed from schedule.");
             }
-            case "2": {
-               controller.setView(ViewType.MAIN_VIEW);
-               return;
-            }
-            default:
-               System.out.println("Invalid selection, try again.");
-            }
+            break;
+         }
+         case "2": {
+            controller.setView(ViewType.MAIN_VIEW);
+            loop = false;
+            break;
+         }
+         default:
+            clearScreen();
+            System.out.println("Invalid selection, try again.");
          }
       }
    }

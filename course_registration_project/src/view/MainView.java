@@ -17,14 +17,14 @@ public class MainView extends View {
    public void display() {
       boolean loop;
       do {
-         System.out.println("\nMain Menu");
-         System.out.println("Logged in as " + model.getUserName());
-         System.out.println("1) Register new course");
-         System.out.println("2) Unregister course");
-         System.out.println("3) View registered courses");
-         System.out.println("4) View available courses");
-         System.out.println("5) Log out");
-         System.out.println("6) Exit program");
+         System.out.println("\nMain Menu\n");
+         System.out.println("Logged in as " + model.getUserName() + '\n');
+         System.out.println("1) Register new course\n");
+         System.out.println("2) Unregister course\n");
+         System.out.println("3) View registered courses\n");
+         System.out.println("4) View available courses\n");
+         System.out.println("5) Log out\n");
+         System.out.println("6) Exit program\n");
          System.out.print("Enter selection:  ");
 
          loop = false;
@@ -49,10 +49,11 @@ public class MainView extends View {
             System.out.println("Logged out of system.");
             break;
          case "6":
-            System.out.println("Exited registration system.");
+            System.out.println("\nExited registration system.");
             System.exit(0);
          default:
-            loop = false;
+            loop = true;
+            clearScreen();
             System.out.println("Invalid selection, try again.");
          }
       } while (loop);

@@ -19,48 +19,53 @@ public class RegisterCourseView extends View {
     */
    @Override
    public void display() {
-      while (true) {
-         System.out.println("\nRegistered Courses for " + model.getUserName());
+      boolean loop = true;
+      while (loop) {
+         System.out.println("\nRegistered Courses for " + model.getUserName() + '\n');
          List<Course> registeredCourses = model.getRegisteredCourses();
          if (registeredCourses.isEmpty()) {
-            System.out.println("No courses registered.");
-         }
-         for (Course course : registeredCourses) {
-            System.out.println("------------------------------------------");
-            System.out.println(course);
+            System.out.println("No courses registered.\n");
+         } else {
+            for (Course course : registeredCourses) {
+               System.out.println("------------------------------------------");
+               System.out.println(course);
+            }
+            System.out.println("------------------------------------------\n");
          }
 
-         boolean loop = true;
-         while (loop) {
-            System.out.println("\n1) Add new course.");
-            System.out.println("2) Go to main view");
-            System.out.print("Enter selection:  ");
+         System.out.println("1) Add new course\n");
+         System.out.println("2) Go to main view\n");
+         System.out.print("Enter selection:  ");
 
-            String selection = controller.systemInput().nextLine();
-            switch (selection) {
-            case "1": {
-               System.out.print("\nEnter Course Id:  ");
-               String courseId = controller.systemInput().nextLine();
-               if (model.registeredCourseExists(courseId)) {
-                  System.out.println("Course " + courseId + " already exists in schedule.");
-               } else if (!model.openCourseExists(courseId)) {
-                  System.out.println("Course " + courseId + " is not an existing open course.");
-               } else if (!model.isOpenCourseAvailable(courseId)) {
-                  System.out.println("Course " + courseId + " is full.");
-               } else {
-                  model.registerCourse(courseId);
-                  loop = false;
-                  System.out.println("Course " + courseId + " added to schedule.");
-               }
-               break;
+         String selection = controller.systemInput().nextLine();
+         switch (selection) {
+         case "1": {
+            System.out.print("\nEnter Course Id:  ");
+            String courseId = controller.systemInput().nextLine();
+            if (model.registeredCourseExists(courseId)) {
+               clearScreen();
+               System.out.println("\nCourse " + courseId + " already exists in schedule.");
+            } else if (!model.openCourseExists(courseId)) {
+               clearScreen();
+               System.out.println("\nCourse " + courseId + " is not an existing open course.");
+            } else if (!model.isOpenCourseAvailable(courseId)) {
+               clearScreen();
+               System.out.println("\nCourse " + courseId + " is full.");
+            } else {
+               model.registerCourse(courseId);
+               clearScreen();
+               System.out.println("\nCourse " + courseId + " added to schedule.");
             }
-            case "2": {
-               controller.setView(ViewType.MAIN_VIEW);
-               return;
-            }
-            default:
-               System.out.println("Invalid selection, try again.");
-            }
+            break;
+         }
+         case "2": {
+            controller.setView(ViewType.MAIN_VIEW);
+            loop = false;
+            break;
+         }
+         default:
+            clearScreen();
+            System.out.println("Invalid selection, try again.");
          }
       }
    }

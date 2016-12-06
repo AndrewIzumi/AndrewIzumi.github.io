@@ -17,28 +17,28 @@ public class LoginView extends View {
    public void display() {
       boolean loop = true;
       while (loop) {
-         System.out.println("\nCourse Registration System");
-         System.out.println("1) Add new student");
-         System.out.println("2) Login");
-         System.out.println("3) Exit");
+         System.out.println("\nCourse Registration System\n");
+         System.out.println("1) Add new student\n");
+         System.out.println("2) Login\n");
+         System.out.println("3) Exit\n");
          System.out.print("Enter selection:  ");
 
          String selection = controller.systemInput().nextLine();
          switch (selection) {
          case "1": {
             System.out.println("\nCreating new account.");
-            System.out.print("Enter first name:  ");
+            System.out.print("\nEnter first name:  ");
             String firstName = controller.systemInput().nextLine();
-            System.out.print("Enter last name:  ");
+            System.out.print("\nEnter last name:  ");
             String lastName = controller.systemInput().nextLine();
-            System.out.print("Enter user name:  ");
+            System.out.print("\nEnter user name:  ");
             String userName = controller.systemInput().nextLine();
-            System.out.print("Enter password:  ");
+            System.out.print("\nEnter password:  ");
             String password = controller.systemInput().nextLine();
 
             // Check to see if user is registered
             if (model.verifyAccount(userName, password)) {
-               System.out.println("User '" + userName + "' already exists, try again.");
+               System.out.println("\nUser '" + userName + "' already exists, try again.");
             } else {
                // Add new student in memory and also to file
                model.addStudent(firstName, lastName, userName, password);
@@ -50,16 +50,15 @@ public class LoginView extends View {
          }
          case "2": {
             System.out.println("\nLogging into system.");
-            System.out.print("Enter user name:  ");
+            System.out.print("\nEnter user name:  ");
             String userName = controller.systemInput().nextLine();
-            System.out.print("Enter password:  ");
+            System.out.print("\nEnter password:  ");
             String password = controller.systemInput().nextLine();
 
             // Check to see if user is registered
             if (!model.verifyAccount(userName, password)) {
-               System.out.println("Invalid user name or password, try again.");
+               System.out.println("\nInvalid user name or password, try again.");
             } else {
-               System.out.println("User " + userName + " is authenticated.");
                model.loadStudentCourses();
                // Set next view to be displayed to main menu view
                controller.setView(ViewType.MAIN_VIEW);
@@ -68,11 +67,12 @@ public class LoginView extends View {
             break;
          }
          case "3": {
-            System.out.println("Exited registration system.\n");
+            System.out.println("\nExited registration system.");
             System.exit(0);
          }
          default:
-            System.out.println("Invalid selection, try again.");
+            clearScreen();
+            System.out.println("\nInvalid selection, try again.");
          }
       }
    }

@@ -49,6 +49,7 @@ public class StudentRegistration {
     */
    public void processEvents() {
       while (true) {
+         controller.currentView().clearScreen();
          controller.currentView().display();
       }
    }
