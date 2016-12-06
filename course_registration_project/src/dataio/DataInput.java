@@ -125,4 +125,34 @@ public class DataInput {
       }
       return true;
    }
+   
+   /**
+    * Parse student course data from file into student course ID list
+    * Similar structure as others for ease of use
+    *
+    * @param  studentCourseIdList list to be appended with course Id strings
+    *                             initialized from student course data from file
+    * @return                     true if course data read from file successfully
+    *                             false otherwise
+    */
+   public boolean parseStudentCourseData(List<String> studentCourseIdList) {
+      Scanner input = null;
+      try {
+         File file = new File(filePath);
+         input = new Scanner(file);
+         input.useDelimiter("\\|");
+         while (input.hasNext()) {
+            String courseId = input.next();
+            if (courseId.isEmpty()) {
+               continue;
+            }
+            studentCourseIdList.add(courseId);
+         }
+      } catch (FileNotFoundException ex) {
+         return false;
+      } finally {
+         input.close();
+      }
+      return true;
+   }
 }
