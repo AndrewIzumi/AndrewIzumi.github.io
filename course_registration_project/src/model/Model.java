@@ -64,20 +64,6 @@ public class Model {
          if (student.getUserName().equals(userName)) {
             if (student.getPassword().equals(password)) {
                currentStudent = student;
-               
-               // need to load student courses after login
-               List<String> studentCourses = new ArrayList<>();
-               currentStudentFilePath = "data" + File.separator + "student_" + currentStudent.getUserName() + ".txt";
-               DataInput dataInput = new DataInput(currentStudentFilePath);
-               
-               if(dataInput.parseStudentCourseData(studentCourses)) {
-                  for(String courseId : studentCourses) {
-                     Course c = findOpenCourse(courseId);
-                     if(c != null) {
-                        currentStudent.addCourse(c);
-                     }
-                  }
-               }
                return true;
             }
          }
@@ -200,7 +186,7 @@ public class Model {
     * Saves the current openCourses list to the courses.txt file.
     * Returns true if successful, false if not
     */
-   public boolean saveCourseChanges() {
+   private boolean saveCourseChanges() {
       // Write temporary file with changes
       String tmpFileName = "data" + File.separator + "coursesTMP.txt";
       File newFile = new File(tmpFileName);
@@ -235,7 +221,7 @@ public class Model {
     * Saves the current students list to the students.txt file.
     * Returns true if successful, false if not
     */
-   public boolean saveStudentsChanges() {
+   private boolean saveStudentsChanges() {
       // Write temporary file with changes
       String tmpFileName = "data" + File.separator + "studentsTMP.txt";
       File newFile = new File(tmpFileName);
@@ -269,7 +255,7 @@ public class Model {
     * Saves the current students courses to the student_username.txt file.
     * Returns true if successful, false if not
     */
-   public boolean saveStudentCourseChanges() {
+   private boolean saveStudentCourseChanges() {
       // Write temporary file with changes
       String tmpFileName = "data" + File.separator + "studentCoursesTMP.txt";
       File newFile = new File(tmpFileName);
@@ -301,4 +287,24 @@ public class Model {
       }
       return false;
    }
+   
+  /**
+    * load student course data from student_username.txt file.
+    * used after login of known user
+    */
+   public void loadStudentCourses() {
+      List<String> studentCourses = new ArrayList<>();
+      currentStudentFilePath = "data" + File.separator + "student_" + currentStudent.getUserName() + ".txt";
+      DataInput dataInput = new DataInput(currentStudentFilePath);
+      
+      if(dataInput.parseStudentCourseData(studentCourses)) {
+         for(String courseId : studentCourses) {
+            Course c = findOpenCourse(courseId);
+               if(c != null) {
+                  currentStudent.addCourse(c);
+               }
+         }
+      }
+   }
+   
 }
