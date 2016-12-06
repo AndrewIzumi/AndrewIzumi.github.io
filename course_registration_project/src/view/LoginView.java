@@ -60,6 +60,7 @@ public class LoginView extends View {
                System.out.println("Invalid user name or password, try again.");
             } else {
                System.out.println("User " + userName + " is authenticated.");
+               model.loadStudentCourses();
                // Set next view to be displayed to main menu view
                controller.setView(ViewType.MAIN_VIEW);
                loop = false;
