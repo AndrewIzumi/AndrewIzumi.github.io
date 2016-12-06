@@ -18,7 +18,7 @@ public class Model {
    
    private static final String studentFilePath = "data" + File.separator + "students.txt";
    
-   private String currentStudentFilePath = ""; // note: file may not exist for some/new students
+   private String currentStudentFilePath = "";
 
    public Model() {
       if (!loadCourses(courseFilePath)) {
@@ -44,7 +44,7 @@ public class Model {
       students.add(newStudent);
       currentStudent = newStudent;
       currentStudentFilePath = "data" + File.separator + "student_" + currentStudent.getUserName() + ".txt";
-      // TODO:  Write result to file for persistence
+      saveStudentsChanges();
    }
 
    /**
@@ -66,15 +66,15 @@ public class Model {
                currentStudent = student;
                
                // need to load student courses after login
-               List<Course> studentCourses = new ArrayList<>();
+               List<String> studentCourses = new ArrayList<>();
                currentStudentFilePath = "data" + File.separator + "student_" + currentStudent.getUserName() + ".txt";
                DataInput dataInput = new DataInput(currentStudentFilePath);
                
-               if(dataInput.parseCourseData(studentCourses)) {
-                  for(Course course : studentCourses) {
-                     Course updatedCourse = findOpenCourse(course.getId());
-                     if(updatedCourse != null) {
-                        currentStudent.addCourse(updatedCourse);
+               if(dataInput.parseStudentCourseData(studentCourses)) {
+                  for(String courseId : studentCourses) {
+                     Course c = findOpenCourse(courseId);
+                     if(c != null) {
+                        currentStudent.addCourse(c);
                      }
                   }
                }
@@ -113,7 +113,7 @@ public class Model {
          }
       }
       saveCourseChanges();
-      // TODO: saveStudentChanges();
+      saveStudentCourseChanges();
    }
 
    /**
@@ -131,7 +131,7 @@ public class Model {
          }
       }
       saveCourseChanges();
-      // TODO:  saveStudentChanges();
+      saveStudentCourseChanges();
    }
 
    /**
@@ -225,8 +225,80 @@ public class Model {
       oldFile.delete();
       
       // rename tmp file to old file name
-      newFile.renameTo(oldFile);
+      if(newFile.renameTo(oldFile)) {
+         return true;
+      }
+      return false;
+   }
+   
+  /**
+    * Saves the current students list to the students.txt file.
+    * Returns true if successful, false if not
+    */
+   public boolean saveStudentsChanges() {
+      // Write temporary file with changes
+      String tmpFileName = "data" + File.separator + "studentsTMP.txt";
+      File newFile = new File(tmpFileName);
+      PrintWriter printwriter = null;
+      try {
+         printwriter = new PrintWriter(newFile);
+         printwriter.println("username | firstname | lastname | password");
+         for(Student s : students) {
+            printwriter.println(s.getUserName() + '|' + s.getFirstName() + '|' + s.getLastName() + '|' + s.getPassword());
+         }
+      }
+      catch (IOException ex) {
+         return false;
+      }
+      finally {
+         printwriter.close();
+      }
       
-      return true;
+      // delete old file
+      File oldFile = new File(studentFilePath);
+      oldFile.delete();
+      
+      // rename tmp file to old file name
+      if(newFile.renameTo(oldFile)) {
+         return true;
+      }
+      return false;
+   }
+   
+  /**
+    * Saves the current students courses to the student_username.txt file.
+    * Returns true if successful, false if not
+    */
+   public boolean saveStudentCourseChanges() {
+      // Write temporary file with changes
+      String tmpFileName = "data" + File.separator + "studentCoursesTMP.txt";
+      File newFile = new File(tmpFileName);
+      PrintWriter printwriter = null;
+      try {
+         printwriter = new PrintWriter(newFile);
+         List<Course> registeredCourses = currentStudent.getRegisteredCourses();
+         if(!registeredCourses.isEmpty()) {
+            printwriter.print(registeredCourses.get(0).getId());
+            for(int i = 1; i < registeredCourses.size(); i++) {
+               printwriter.print('|' + registeredCourses.get(i).getId());
+            }
+         }
+      }
+      catch (IOException ex) {
+         return false;
+      }
+      finally {
+         printwriter.close();
+      }
+      
+      // delete old file
+      File oldFile = new File(currentStudentFilePath);
+      oldFile.delete();
+      
+      // rename tmp file to old file name
+      if(newFile.renameTo(oldFile)) {
+         return true;
+      }
+      return false;
    }
 }
