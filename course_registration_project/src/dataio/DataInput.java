@@ -69,7 +69,7 @@ public class DataInput {
       } catch (FileNotFoundException ex) {
          return false;
       } finally {
-         input.close();
+         if(input != null) input.close();
       }
       return true;
    }
@@ -122,7 +122,7 @@ public class DataInput {
       } catch (FileNotFoundException ex) {
          return false;
       } finally {
-         input.close();
+         if(input != null) input.close();
       }
       return true;
    }
@@ -152,7 +152,7 @@ public class DataInput {
       } catch (FileNotFoundException ex) {
          return false;
       } finally {
-         input.close();
+         if(input != null) input.close();
       }
       return true;
    }
