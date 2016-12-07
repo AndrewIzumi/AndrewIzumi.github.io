@@ -39,7 +39,12 @@ public class LoginView extends View {
             // Check to see if user is registered
             if (model.verifyAccount(userName, password)) {
                System.out.println("\nUser '" + userName + "' already exists, try again.");
-            } else {
+            }
+            else if(userName.equals("username")) {
+               // because our parseStudentData ignores the username line
+               System.out.println("\n\"username\" is not a valid username, try again.");
+            }
+            else {
                // Add new student in memory and also to file
                model.addStudent(firstName, lastName, userName, password);
                // Set next view to be displayed to main menu view
