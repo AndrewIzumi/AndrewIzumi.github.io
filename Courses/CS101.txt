@@ -1,6 +1,0 @@
-Name
-Start Date
-End Date
-Summary
-Max Students
-Current Students
